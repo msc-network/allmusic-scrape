@@ -6,20 +6,34 @@ Album ID is found at the end of the URL beginning  with 'mw'
 
 e.g. on Linux
 
-```./builds/allmusic-scraper-linux -i  mw0000275621```
+```./builds/allmusic-scraper-linux-amd64 -i mw0000275621```
 
-This will write a file called data.txt with Song Names and Composers
+Or with optional filename
 
-### Executables
+```./builds/allmusic-scraper-linux-amd64 -i mw0000275621 -f scrape.txt```
 
-Executables are in the builds folder
+Run without arguments to get a list of options that can be passed to the binary
 
-Linux - allmusic-scraper-linux
+This will write a file called data.txt in the format
 
-#### Unested builds
+Artist - Album Title
+
+Song Names [ Composers ]
+
+### Building Binaries
+
+- Clone the repo
+
+- Run ``` ./build-allmusic-scraper.sh```
+
+It is setup to build for the following platforms
 
 Windows 32bit - allmusic-scrape-windows-386.exe
 
 Windows 64bit - allmusic-scrape-windows-amd64.exe
 
-MacOS (untested) - allmusic-scrape-darwin-amd64
+MacOS - allmusic-scrape-darwin-amd64
+
+#### For Linux
+
+Run ```go build allmusic-scrape```

@@ -11,10 +11,11 @@ import (
 )
 
 var (
-	id     string
-	url    string
-	parent string
-	page   string
+	id       string
+	url      string
+	parent   string
+	page     string
+	filename string
 )
 
 func main() {
@@ -30,7 +31,7 @@ func main() {
 		fmt.Printf("Album ID is missing, please re-run\n")
 		os.Exit(1)
 	}
-	err := ioutil.WriteFile("./data.txt", nil, 0754)
+	err := ioutil.WriteFile(filename, nil, 0754)
 	check(err)
 	scrapeAllMusic(id)
 }
@@ -45,6 +46,7 @@ func scrapeAllMusic(id string) {
 
 func init() {
 	flag.StringVarP(&id, "id", "i", "", "Pass the ID of the allmusic album page")
+	flag.StringVarP(&filename, "filename", "f", "data.txt", "Pass in an optional filename")
 }
 
 func check(e error) {
@@ -65,7 +67,7 @@ func parseDoc(page string) {
 
 	artist := strings.Trim(doc.Find(".album-artist span a").Text(), "  ")
 	album := strings.Trim(doc.Find(".album-title").Text(), " ")
-	f, err := os.OpenFile("./data.txt", os.O_APPEND|os.O_WRONLY, 0644)
+	f, err := os.OpenFile(filename, os.O_APPEND|os.O_WRONLY, 0644)
 	defer f.Close()
 
 	f.WriteString(string(artist + " - " + album + "\n"))
@@ -74,16 +76,16 @@ func parseDoc(page string) {
 	doc.Find(".title-composer").Each(func(index int, item *goquery.Selection) {
 		title := strings.Trim(item.Find(".title a").Text(), " ")
 		composer := strings.Trim(item.Find(".composer a").Text(), " ")
-		writeRelease(title, composer)
+		writeRelease(artist, title, composer)
 	})
 	check(err)
 }
 
-func writeRelease(t, c string) {
-	f, err := os.OpenFile("./data.txt", os.O_APPEND|os.O_WRONLY, 0644)
+func writeRelease(a, t, c string) {
+	f, err := os.OpenFile(filename, os.O_APPEND|os.O_WRONLY, 0644)
 	defer f.Close()
 
-	f.WriteString(string(t + " - " + c + "\n"))
+	f.WriteString(string(a + " - " + t + " [" + c + "]" + "\n"))
 
 	check(err)
 	return
