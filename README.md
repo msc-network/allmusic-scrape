@@ -2,7 +2,7 @@
 
 Run the executable from the command line with the flag -i ALBUM-ID
 
-Album ID is found at the end of the URL beginnign with 'mw'
+Album ID is found at the end of the URL beginning  with 'mw'
 
 e.g. on Linux
 
@@ -22,4 +22,4 @@ Windows 32bit - allmusic-scrape-windows-386.exe
 
 Windows 64bit - allmusic-scrape-windows-amd64.exe
 
-Mac OS (untested) - allmusic-scrape-darwin-amd64
+MacOS (untested) - allmusic-scrape-darwin-amd64
